@@ -2,15 +2,18 @@
   "name": "node.js-mern-test-web-application",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "node index.mjs"
+    "serve": "nodemon --delay 3"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^17.2.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
   }
 }
