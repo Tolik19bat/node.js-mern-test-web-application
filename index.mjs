@@ -1,6 +1,9 @@
 import { createServer } from "node:http";
+import { config } from "dotenv";
 
-const port = 8000;
+config();
+
+const port = process.env.PORT || 8000;
 
 const server = createServer();
 
@@ -12,3 +15,6 @@ server.on("request", (req, res) => {
 
 server.listen(port);
 // пример: запустить сервер
+
+
+console . log ( process . env );
