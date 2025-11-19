@@ -1,0 +1,11 @@
+{
+  "watch": [
+    "sourse/",
+    "index.mjs"
+  ],
+  "ext": "mjs",
+  "ignore": [
+    "data/**",
+    "README.md"
+  ]
+}

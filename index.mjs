@@ -7,22 +7,38 @@ config();
 
 const port = process.env.PORT || 8000;
 
-const reDetail = /\/([0-9abcdf]{24})/;
+// простой маршрут: /item/:id — захватываем id как всё после /item/
+const reDetail = /^\/item\/([^/]+)$/;
 
 const server = createServer();
 
 server.on("request", (req, res) => {
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "text/html", "charset=utf-8");
   const requestedPath = new URL(req.url, `http://${req.headers.host}`).pathname;
+  console.log(req.method, requestedPath);
+
+  // игнорируем автоматические запросы от браузера/инструментов (возвращаем 204 No Content)
+  if (
+    requestedPath === "/favicon.ico" ||
+    requestedPath.startsWith("/.well-known")
+  ) {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
+
+  res.statusCode = 200;
+  // корректно указываем Content-Type с кодировкой
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
 
   const r = reDetail.exec(requestedPath);
-  if (r) detailPage(res, r[1]);
-  else if (requestedPath === "/") mainPage(res);
-  else errorPage(res);
+  if (r) {
+    detailPage(res, r[1]);
+  } else if (requestedPath === "/") {
+    mainPage(res);
+  } else {
+    errorPage(res);
+  }
 });
 
-server.listen(port);
 // пример: запустить сервер
-
-console.log(process.env);
+server.listen(port);
